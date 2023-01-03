@@ -83,4 +83,5 @@ function GetAll($db)
     $listele = $db->query("SELECT * FROM sirketler");
     echo json_encode($listele->fetchAll(PDO::FETCH_CLASS), JSON_UNESCAPED_UNICODE);
 }
+
 ?>

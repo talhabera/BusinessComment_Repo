@@ -28,7 +28,7 @@ switch ($obj->queryType) {
 function InsertQuery($db, $obj)
 {
     $sorgu = $db->prepare("INSERT INTO kullanici_yorumlari
-SET KId=:id,
+SET 
 YorumIcerik=:yorumicerik,
 YorumDurum=:yorumdurum,
 YorumTarih=:yorumtarih,

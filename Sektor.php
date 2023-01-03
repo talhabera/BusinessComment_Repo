@@ -33,7 +33,6 @@ function InsertQuery($db, $obj)
 {
 //Veritabanına ekleme işlemi yapacak olan kod bloğu
     $sorgu = $db->prepare("INSERT INTO sektor SET 
-SektorId=:id,
 SektorTanim=:tanim"
     );
 

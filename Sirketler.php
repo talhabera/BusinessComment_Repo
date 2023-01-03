@@ -7,11 +7,6 @@ try {
     return;
 }
 
-if ( == "GET") {
-    GetAll($db);
-    return;
-};
-
 $obj = json_decode(file_get_contents('php://input'));
 
 switch ($_SERVER["REQUEST_METHOD"]) {

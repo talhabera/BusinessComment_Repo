@@ -7,24 +7,24 @@ try {
     return;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ( == "GET") {
     GetAll($db);
     return;
 };
 
 $obj = json_decode(file_get_contents('php://input'));
 
-switch ($obj->queryType) {
-    case 'insert':
-        InsertQuery($db, $obj->value);
-        break;
-    case 'update':
-        UpdateQuery($db, $obj->value);
-    case 'delete':
-        DeleteQuery($db, $obj->value);
-        break;
-    case 'select':
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case 'GET':
         GetAll($db);
+        break;
+    case 'POST':
+        InsertQuery($db, $obj);
+        break;
+    case 'PUT':
+        UpdateQuery($db, $obj);
+    case 'DELETE':
+        DeleteQuery($db, $obj);
         break;
     default:
         break;

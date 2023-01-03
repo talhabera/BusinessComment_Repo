@@ -66,7 +66,7 @@ SirketIlce=:SirketIlce WHERE SirketId=:SirketId");
     }
 }
 
-function DeleteQuery($db)
+function DeleteQuery($db, $obj)
 {
     $sorgu = $db->prepare("DELETE FROM sirketler WHERE SirketId=:SirketId");
     $sil = $sorgu->execute(array($obj));

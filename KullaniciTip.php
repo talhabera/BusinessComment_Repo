@@ -42,7 +42,7 @@ Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim"
 function UpdateQuery($db, $obj)
 {
     $sorgu = $db->prepare("UPDATE kullanici_tip SET
-Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim WHERE Kullanici_Tip_Id=:Kullanici_Tip_Tanim"
+Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim WHERE Kullanici_Tip_Id=:Kullanici_Tip_Id"
     );
     $guncelle = $sorgu->execute((array)$obj);
     if ($guncelle) {
@@ -54,7 +54,7 @@ Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim WHERE Kullanici_Tip_Id=:Kullanici_Tip_T
 
 function DeleteQuery($db, $obj)
 {
-    $sorgu = $db->prepare("DELETE FROM kullanici_tip WHERE Kullanici_Tip_Id=? ");
+    $sorgu = $db->prepare("DELETE FROM kullanici_tip WHERE Kullanici_Tip_Id=:Kullanici_Tip_Id");
     $sil = $sorgu->execute(array($obj));
 
     if ($sil) {

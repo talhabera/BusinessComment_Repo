@@ -1,5 +1,4 @@
 <?php
-
 try {
     $db = new PDO("mysql:host=localhost;dbname=business_comment;charset=utf8", "root", "");
 } catch (PDOException $e) {
@@ -8,17 +7,17 @@ try {
 
 $obj = json_decode(file_get_contents('php://input'));
 
-switch ($obj->queryType) {
-    case 'insert':
-        InsertQuery($db, $obj->value);
-        break;
-    case 'update':
-        UpdateQuery($db, $obj->value);
-    case 'delete':
-        DeleteQuery($db, $obj->value);
-        break;
-    case 'select':
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case 'GET':
         GetAll($db);
+        break;
+    case 'POST':
+        InsertQuery($db, $obj);
+        break;
+    case 'PUT':
+        UpdateQuery($db, $obj);
+    case 'DELETE':
+        DeleteQuery($db, $obj);
         break;
     default:
         break;
@@ -81,7 +80,6 @@ function DeleteQuery($db)
 function GetAll($db)
 {
     $listele = $db->query("SELECT * FROM kullanicilar");
-    echo json_encode($listele->fetch());
+    echo json_encode($listele->fetchAll(PDO::FETCH_CLASS), JSON_UNESCAPED_UNICODE);
 }
-
 ?>

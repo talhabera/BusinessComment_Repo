@@ -1,10 +1,14 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] != "POST") return;
 try {
     $db = new PDO("mysql:host=localhost;dbname=business_comment;charset=utf8", "root", "");
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    GetAll($db);
+    return;
+};
 
 $obj = json_decode(file_get_contents('php://input'));
 
@@ -67,8 +71,6 @@ function DeleteQuery($db)
 function GetAll($db)
 {
     $listele = $db->query("SELECT * FROM kullanici_tip");
-    echo json_encode($listele->fetch());
-
+    echo json_encode($listele->fetchAll(PDO::FETCH_CLASS), JSON_UNESCAPED_UNICODE);
 }
-
 ?>

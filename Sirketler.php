@@ -42,39 +42,39 @@ SirketIlce=:SirketIlce"
     $kayit = $sorgu->execute((array)$obj);
 
     if ($kayit) {
-        echo "Kayıt başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Kayıt başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 
 function UpdateQuery($db, $obj)
 {
     $sorgu = $db->prepare("UPDATE sirketler SET 
-Sirket_Adi=?,
-SektorId=?,
-SirketId=?,
-SektorTanim=?,
-SirketUlke=?,
-SirketSehir=?,
-SirketIlce=? WHERE SirketId=?");
+Sirket_Adi=:Sirket_Adi,
+SektorId=:SektorId,
+SirketId=:SirketId,
+SektorTanim=:SektorTanim,
+SirketUlke=:SirketUlke,
+SirketSehir=:SirketSehir,
+SirketIlce=:SirketIlce WHERE SirketId=:SirketId");
     $guncelle = $sorgu->execute((array)$obj);
     if ($guncelle) {
-        echo "Güncelleme başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Güncelleme başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 
 function DeleteQuery($db)
 {
-    $sorgu = $db->prepare("DELETE FROM sirketler WHERE SirketId=?");
-    $sil = $sorgu->execute(array(3));
+    $sorgu = $db->prepare("DELETE FROM sirketler WHERE SirketId=:SirketId");
+    $sil = $sorgu->execute(array($obj));
 
     if ($sil) {
-        echo "Silme başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Silme başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 

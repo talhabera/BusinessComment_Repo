@@ -13,16 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 $obj = json_decode(file_get_contents('php://input'));
 
 switch ($obj->queryType) {
-    case 'insert':
-        InsertQuery($db, $obj->value);
-        break;
-    case 'update':
-        UpdateQuery($db, $obj->value);
-    case 'delete':
-        DeleteQuery($db, $obj->value);
-        break;
-    case 'select':
+    case 'GET':
         GetAll($db);
+        break;
+    case 'POST':
+        InsertQuery($db, $obj);
+        break;
+    case 'PUT':
+        UpdateQuery($db, $obj);
+    case 'DELETE':
+        DeleteQuery($db, $obj);
         break;
     default:
         break;
@@ -31,7 +31,7 @@ switch ($obj->queryType) {
 function InsertQuery($db, $obj)
 {
     $sorgu = $db->prepare("INSERT INTO kullanici_tip SET 
-Kullanici_Tip_Tanim=:tanim"
+Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim"
     );
 
     $kayit = $sorgu->execute((array)$obj);
@@ -46,7 +46,7 @@ Kullanici_Tip_Tanim=:tanim"
 function UpdateQuery($db, $obj)
 {
     $sorgu = $db->prepare("UPDATE kullanici_tip SET
-Kullanici_Tip_Tanim=? WHERE Kullanici_Tip_Id=?"
+Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim WHERE Kullanici_Tip_Id=:Kullanici_Tip_Tanim"
     );
     $guncelle = $sorgu->execute((array)$obj);
     if ($guncelle) {
@@ -59,7 +59,7 @@ Kullanici_Tip_Tanim=? WHERE Kullanici_Tip_Id=?"
 function DeleteQuery($db)
 {
     $sorgu = $db->prepare("DELETE FROM kullanici_tip WHERE Kullanici_Tip_Id=? ");
-    $sil = $sorgu->execute(array(3));
+    $sil = $sorgu->execute(array($obj));
 
     if ($sil) {
         echo "Silme başarılı" . "<br>";

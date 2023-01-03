@@ -14,16 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 $obj = json_decode(file_get_contents('php://input'));
 
 switch ($obj->queryType) {
-    case 'insert':
-        InsertQuery($db, $obj->value);
-        break;
-    case 'update':
-        UpdateQuery($db, $obj->value);
-    case 'delete':
-        DeleteQuery($db, $obj->value);
-        break;
-    case 'select':
+    case 'GET':
         GetAll($db);
+        break;
+    case 'POST':
+        InsertQuery($db, $obj);
+        break;
+    case 'PUT':
+        UpdateQuery($db, $obj);
+    case 'DELETE':
+        DeleteQuery($db, $obj);
         break;
     default:
         break;
@@ -33,41 +33,41 @@ function InsertQuery($db, $obj)
 {
 //Veritabanına ekleme işlemi yapacak olan kod bloğu
     $sorgu = $db->prepare("INSERT INTO sektor SET 
-SektorTanim=:tanim"
+SektorTanim=:SektorTanim"
     );
 
     $kayit = $sorgu->execute((array)$obj);
 
     if ($kayit) {
-        echo "Kayıt başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Kayıt başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 
 function UpdateQuery($db, $obj)
 {
     $sorgu = $db->prepare("UPDATE sektor SET
-SektorId=?, SektorTanim=? WHERE SektorId=?"
+SektorId=:SektorId, SektorTanim=:SektorTanim WHERE SektorId=:SektorId"
     );
     $guncelle = $sorgu->execute((array)$obj);
     if ($guncelle) {
-        echo "Güncelleme başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Güncelleme başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 
 }
 
 function DeleteQuery($db)
 {
-    $sorgu = $db->prepare("DELETE FROM sektor WHERE SektorId=?");
-    $sil = $sorgu->execute(array(3));
+    $sorgu = $db->prepare("DELETE FROM sektor WHERE SektorId=:SektorId");
+    $sil = $sorgu->execute(array($obj));
 
     if ($sil) {
-        echo "Silme başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Silme başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 

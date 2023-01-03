@@ -54,10 +54,19 @@ function InsertQuery($db, $kullanici)
 function UpdateQuery($db, $kullanici)
 {
     $sorgu = $db->prepare("UPDATE kullanicilar 
-SET KId=?,
-    Kadi=?,
-    Ksoyadi=?,
-    DTarihi=?,TelNo=?,Email=?,KullaniciUnvan=?,KullaniciUlke=?,KullaniciSehir=?,KullaniciIlce=?,KayitTarihi=?, Kullanici_Tip_Id=?,SirketId=?,YorumYapilsinMi=? WHERE KId=?"
+SET Kadi=:Kadi,
+    Ksoyadi=:Ksoyadi,
+    DTarihi=:DTarihi,
+    TelNo=:TelNo,
+    Email=:Email,
+    KullaniciUnvan=:KullaniciUnvan,
+    KullaniciUlke=:KullaniciUlke,
+    KullaniciSehir=:KullaniciSehir,
+    KullaniciIlce=:KullaniciIlce,
+    KayitTarihi=:KayitTarihi,
+    Kullanici_Tip_Id=:Kullanici_Tip_Id,
+    SirketId=:SirketId,
+    YorumYapilsinMi=:YorumYapilsinMi WHERE KId=:KId"
     );
     $guncelle = $sorgu->execute((array)$kullanici);
     if ($guncelle) {
@@ -70,7 +79,7 @@ SET KId=?,
 
 function DeleteQuery($db, $obj)
 {
-    $sorgu = $db->prepare("DELETE FROM kullanicilar WHERE KId=?");
+    $sorgu = $db->prepare("DELETE FROM kullanicilar WHERE KId=:KId");
     $sil = $sorgu->execute((array)$obj);
 
     if ($sil) {

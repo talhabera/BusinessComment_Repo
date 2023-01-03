@@ -12,17 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 $obj = json_decode(file_get_contents('php://input'));
 
-switch ($obj->queryType) {
-    case 'insert':
-        InsertQuery($db, $obj->value);
-        break;
-    case 'update':
-        UpdateQuery($db, $obj->value);
-    case 'delete':
-        DeleteQuery($db, $obj->value);
-        break;
-    default:
-        break;
+case 'GET':
+    GetAll($db);
+    break;
+case 'POST':
+    InsertQuery($db, $obj);
+    break;
+case 'PUT':
+    UpdateQuery($db, $obj);
+case 'DELETE':
+    DeleteQuery($db, $obj);
+    break;
+default:
+    break;
 }
 
 function InsertQuery($db, $obj)
@@ -37,9 +39,9 @@ YorumId=:yorumid");
     $kayit = $sorgu->execute((array)$obj);
 
     if ($kayit) {
-        echo "Kayıt başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Kayıt başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 
@@ -47,25 +49,25 @@ YorumId=:yorumid");
 function UpdateQuery($db, $obj)
 {
     $sorgu = $db->prepare("UPDATE kullanici_yorumlari SET
-YorumIcerik=?,YorumDurum=?,YorumTarih=? WHERE YorumId=?"
+YorumIcerik=:YorumIcerik,YorumDurum=:YorumDurum,YorumTarih=:YorumTarih WHERE YorumId=:YorumId"
     );
     $guncelle = $sorgu->execute((array)$obj);
     if ($guncelle) {
-        echo "Güncelleme başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Güncelleme başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 
 function DeleteQuery($db)
 {
-    $sorgu = $db->prepare("DELETE FROM kullanici_yorumlari WHERE YorumId=?");
-    $sil = $sorgu->execute(array(3));
+    $sorgu = $db->prepare("DELETE FROM kullanici_yorumlari WHERE YorumId=:YorumId");
+    $sil = $sorgu->execute(array($obj));
 
     if ($sil) {
-        echo "Silme başarılı" . "<br>";
+        echo "Success" . "<br>";
     } else {
-        echo "Silme başarısız" . "<br>";
+        echo "Error" . "<br>";
     }
 }
 

@@ -58,7 +58,7 @@ Kullanici_Tip_Tanim=? WHERE Kullanici_Tip_Id=?"
 
 function DeleteQuery($db)
 {
-    $sorgu = $db->prepare("DELETE FROM kullanici_tip WHERE Kullanici_Tip_Id=?");
+    $sorgu = $db->prepare("DELETE FROM kullanici_tip WHERE Kullanici_Tip_Id=? ");
     $sil = $sorgu->execute(array(3));
 
     if ($sil) {

@@ -27,7 +27,6 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 function InsertQuery($db, $kullanici)
 {
     $sorgu = $db->prepare("INSERT INTO kullanicilar SET 
-    KId=:KId,
     Kadi=:Kadi,
     Ksoyadi=:Ksoyadi,
     DTarihi=:DTarihi,
@@ -69,10 +68,10 @@ SET KId=?,
 }
 
 
-function DeleteQuery($db)
+function DeleteQuery($db, $obj)
 {
     $sorgu = $db->prepare("DELETE FROM kullanicilar WHERE KId=?");
-    $sil = $sorgu->execute(array(3));
+    $sil = $sorgu->execute((array)$obj);
 
     if ($sil) {
         echo "Success";

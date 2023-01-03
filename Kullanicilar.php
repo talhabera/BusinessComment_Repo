@@ -54,7 +54,7 @@ function InsertQuery($db, $kullanici)
 
 function UpdateQuery($db, $kullanici)
 {
-    $sorgu = $db->prepare("UPDATE kullanicilar SET    KId=?,Kadi=?,Ksoyadi=?,DTarihi=?,TelNo=?,Email=?,KullaniciUnvan=?,KullaniciUlke=?,KullaniciSehir=?,KullaniciIlce=?,KayitTarihi=?, Kullanici_Tip_Id=?,SirketId=?,YorumYapilsinMi=? WHERE KId=?"
+    $sorgu = $db->prepare("UPDATE kullanicilar SET KId=?,Kadi=?,Ksoyadi=?,DTarihi=?,TelNo=?,Email=?,KullaniciUnvan=?,KullaniciUlke=?,KullaniciSehir=?,KullaniciIlce=?,KayitTarihi=?, Kullanici_Tip_Id=?,SirketId=?,YorumYapilsinMi=? WHERE KId=?"
     );
     $guncelle = $sorgu->execute((array)$kullanici);
     if ($guncelle) {

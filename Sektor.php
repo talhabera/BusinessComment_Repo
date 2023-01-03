@@ -4,16 +4,12 @@ try {
 
 } catch (PDOException $e) {
     echo $e->getMessage();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    GetAll($db);
     return;
-};
+}
 
 $obj = json_decode(file_get_contents('php://input'));
 
-switch ($obj->queryType) {
+switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
         GetAll($db);
         break;
@@ -59,7 +55,7 @@ SektorId=:SektorId, SektorTanim=:SektorTanim WHERE SektorId=:SektorId"
 
 }
 
-function DeleteQuery($db)
+function DeleteQuery($db, $obj)
 {
     $sorgu = $db->prepare("DELETE FROM sektor WHERE SektorId=:SektorId");
     $sil = $sorgu->execute(array($obj));

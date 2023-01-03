@@ -3,16 +3,12 @@ try {
     $db = new PDO("mysql:host=localhost;dbname=business_comment;charset=utf8", "root", "");
 } catch (PDOException $e) {
     echo $e->getMessage();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    GetAll($db);
     return;
-};
+}
 
 $obj = json_decode(file_get_contents('php://input'));
 
-switch ($obj->queryType) {
+switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
         GetAll($db);
         break;
@@ -56,7 +52,7 @@ Kullanici_Tip_Tanim=:Kullanici_Tip_Tanim WHERE Kullanici_Tip_Id=:Kullanici_Tip_T
     }
 }
 
-function DeleteQuery($db)
+function DeleteQuery($db, $obj)
 {
     $sorgu = $db->prepare("DELETE FROM kullanici_tip WHERE Kullanici_Tip_Id=? ");
     $sil = $sorgu->execute(array($obj));

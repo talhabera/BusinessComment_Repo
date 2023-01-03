@@ -3,28 +3,25 @@ try {
     $db = new PDO("mysql:host=localhost;dbname=business_comment;charset=utf8", "root", "");
 } catch (PDOException $e) {
     echo $e->getMessage();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    GetAll($db);
     return;
-};
+}
 
 $obj = json_decode(file_get_contents('php://input'));
 
-case 'GET':
-    GetAll($db);
-    break;
-case 'POST':
-    InsertQuery($db, $obj);
-    break;
-case 'PUT':
-    UpdateQuery($db, $obj);
-case 'DELETE':
-    DeleteQuery($db, $obj);
-    break;
-default:
-    break;
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case 'GET':
+        GetAll($db);
+        break;
+    case 'POST':
+        InsertQuery($db, $obj);
+        break;
+    case 'PUT':
+        UpdateQuery($db, $obj);
+    case 'DELETE':
+        DeleteQuery($db, $obj);
+        break;
+    default:
+        break;
 }
 
 function InsertQuery($db, $obj)
@@ -59,7 +56,7 @@ YorumIcerik=:YorumIcerik,YorumDurum=:YorumDurum,YorumTarih=:YorumTarih WHERE Yor
     }
 }
 
-function DeleteQuery($db)
+function DeleteQuery($db, $obj)
 {
     $sorgu = $db->prepare("DELETE FROM kullanici_yorumlari WHERE YorumId=:YorumId");
     $sil = $sorgu->execute(array($obj));

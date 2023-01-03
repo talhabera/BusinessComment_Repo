@@ -3,6 +3,7 @@ try {
     $db = new PDO("mysql:host=localhost;dbname=business_comment;charset=utf8", "root", "");
 } catch (PDOException $e) {
     echo $e->getMessage();
+    return;
 }
 
 $obj = json_decode(file_get_contents('php://input'));

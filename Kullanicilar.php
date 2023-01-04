@@ -30,6 +30,8 @@ function InsertQuery($db, $kullanici)
     $sorgu = $db->prepare("INSERT INTO kullanicilar SET 
     Kadi=:Kadi,
     Ksoyadi=:Ksoyadi,
+    KullaniciAdi=:KullaniciAdi,
+    Sifre=:Sifre,
     DTarihi=:DTarihi,
     TelNo=:TelNo,
     Email=:Email,
@@ -57,6 +59,8 @@ function UpdateQuery($db, $kullanici)
     $sorgu = $db->prepare("UPDATE kullanicilar 
 SET Kadi=:Kadi,
     Ksoyadi=:Ksoyadi,
+    KullaniciAdi=:KullaniciAdi,
+    Sifre=:Sifre,
     DTarihi=:DTarihi,
     TelNo=:TelNo,
     Email=:Email,
